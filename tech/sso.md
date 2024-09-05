@@ -12,7 +12,7 @@
 - 对接应用的用户信息已同步至快流或者在快流中注册，目前支持飞书用户信息自动同步。
 
 ### 用户登录流程
-企业后端应用:为贵公司的后端服务
+
 ```mermaid
 sequenceDiagram
     actor user as 用户
@@ -33,7 +33,12 @@ sequenceDiagram
 
 
 ## 后端
-样例工程代码:https://github.com/QFlowTech/kuaiflow-demo
+样例工程代码:
+    https://github.com/QFlowTech/kuaiflow-demo
+
+后端工作量：
+    主要需要参考样例工程中的com.kuaiflow.demo.controller.KuaiFlowController#getAccessToken,
+  实现该http接口。
 
 ### 获取access_token
 ```java
