@@ -12,12 +12,13 @@
 - 对接应用的用户信息已同步至快流或者在快流中注册，目前支持飞书用户信息自动同步。
 
 ### 用户登录流程
+企业后端应用:为贵公司的后端服务
 ```mermaid
 sequenceDiagram
     actor user as 用户
     participant qflowPage as 快流应用页面
-    participant customServer as 三方应用服务器
-    participant qflowServer as 快流服务器
+    participant customServer as 企业后端应用
+    participant qflowServer as 快流服务
 
     user ->> qflowPage: 进入快流页面
     qflowPage ->> customServer: 获取 accessToken
