@@ -32,12 +32,44 @@ sequenceDiagram
 
 
 ## 后端
+样例工程代码:https://github.com/QFlowTech/kuaiflow-demo
+
 ### 获取access_token
 ```java
-public  String loginQFlow() {
-	AuthenticationApi authenticationApi = new AuthenticationApiImpl();
-	return authenticationApi.getAccessToken();
+public class KuaiFlowBiz {
+
+	private FlowClient flowClient;
+
+	@Value("${kuai.flow.enterpriseCode}")
+	private String enterpriseCode;
+
+	@Value("${kuai.flow.appId}")
+	private String appId;
+
+	@Value("${kuai.flow.appSecret}")
+	private String appSecret;
+
+	@PostConstruct
+	public void init() {
+		// 实例化一个FlowClient、为了保护密钥安全，建议将密钥设置在环境变量中或者配置文件中。
+		// Credential cred = new Credential("enterpriseCode", "appId","appSecret");
+		Credential credential = new Credential(enterpriseCode, appId, appSecret);
+		flowClient = new FlowClient(credential);
+	}
+
+	public String getAccessToken() {
+		CustomAuthentication customAuthentication = new CustomAuthentication();
+		// 企业的用户编码-这里获取当前登陆用户的企业userCode、即贵公司的用户唯一Id
+		// customAuthentication.setCustomUserCode(UserContext.getUserCode());
+		customAuthentication.setCustomUserCode("9910031941");
+		// 贵公司使用的三方平台用户编码、如飞书Id
+		// customAuthentication.setLinkUserCode(UserContext.getLinkUserCode());
+		customAuthentication.setLinkUserCode("c94b1dcd");
+		return flowClient.getAccessToken(customAuthentication);
+	}
+
 }
+
 ```
 
 ## 前端
