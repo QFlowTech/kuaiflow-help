@@ -79,10 +79,86 @@ public class KuaiFlowBiz {
 ```
 
 ## 前端
+1、下载[qfcore.js](../source/qfcore.js)文件，放置于工程目录中。qfcore是快流前端基础api库，主要用于自动化登陆、获取待办等统计信息。
 
+2、代码中引用qfcore.js
 ```javascript
+// commonjs
+const qfcore = require('./qfcore');
+
+// es6
+import qfcore from './qfcore';
+```
+
+3、qfcore使用方式
+```javascript
+// qfcore版本号，返回版本号string
+qfcore.getVersion() 
+
+// qfcore初始化，返回promise对象，then参数为是否已登陆boolean
+qfcore.init({
+  // 获取accessToken的Url，后端给出，参照上面后端说明
+  accessTokenUrl: '',
+  // 终端，比如pc端(pc)、飞书小程序(lark-mini)
+  client: 'pc',
+  // 运行环境，可以不填，默认为prod，也可填beta，beta主要用于测试
+  env: 'beta'
+})
+
+// 是否已登陆，返回登陆boolean
+qfcore.isLogged()
+
+// 登陆，返回promise对象，then参数为是否已登陆boolean
+qfcore.login()
+
+// 登出，返回promise对象，then参数为是否登出成功boolean
+qfcore.logout()
+
+// 请求任务数量统计，返回promise对象，then参数为统计summary object
+qfcore.querySummary()
+summary: {
+  // 待办
+  "allTodo": 0,
+  // 已超时
+  "overdue": 0,
+  // 即将超市
+  "soonOverdue": 0,
+  // 催办
+  "urge": 0
+}
+```
+
+4、示例
+```javascript
+// react
+import React, { useState, useEffect } from 'react';
+import qfcore from './qfcore';
+
+export default function Page() {
+  const [logged, setLogged] = useState(false);
+
+  useEffect(() => {
+    qfcore
+      .init({
+        accessTokenUrl: '...',
+        client: 'pc',
+        env: 'beta'
+      })
+      .then((success) => {
+        if (success) {
+          setLogged(true);
+
+          qfcore.querySummary().then((data) => {
+            console.log(data);
+          });
+        }
+      });
+  }, []);
+  return logged && <iframe style={{ width: '100%', height: '100vh' }} src="http://www.kuaiflow.com/user/embed"></iframe>;
+}
 
 ```
+
 
 [上一页](quickstart.md)
 [回目录](../README.md)
