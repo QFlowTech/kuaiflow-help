@@ -79,6 +79,8 @@ public class KuaiFlowBiz {
 ```
 
 ## 前端
+PC浏览器端采用iframe嵌入的方式加载快流工作台界面，步骤如下：
+
 1、下载[qfcore.js](../source/qfcore.js)文件，放置于工程目录中。qfcore是快流前端基础api库，主要用于自动化登陆、获取待办等统计信息。
 
 2、代码中引用qfcore.js
@@ -90,7 +92,7 @@ const qfcore = require('./qfcore');
 import qfcore from './qfcore';
 ```
 
-3、qfcore使用方式
+3、qfcore api包括
 ```javascript
 // qfcore版本号，返回版本号string
 qfcore.getVersion() 
@@ -128,7 +130,7 @@ summary: {
 }
 ```
 
-4、示例
+4、在页面中调用qfcore.init，初始化成功后展示iframe，示例：
 ```javascript
 // react
 import React, { useState, useEffect } from 'react';
@@ -149,6 +151,7 @@ export default function Page() {
           setLogged(true);
 
           qfcore.querySummary().then((data) => {
+            // summary数据可用于入口处气泡等
             console.log(data);
           });
         }
@@ -156,8 +159,9 @@ export default function Page() {
   }, []);
   return logged && <iframe style={{ width: '100%', height: '100vh' }} src="http://www.kuaiflow.com/user/embed"></iframe>;
 }
-
 ```
+iframe的src线上生产环境为https://www.kuaiflow.com/user/embed，目前内测阶段，先填写http://www.kuaiflow.com/user/embed
+
 
 
 [上一页](quickstart.md)
