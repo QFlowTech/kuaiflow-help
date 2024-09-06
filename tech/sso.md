@@ -6,12 +6,23 @@
 快流SSO登录是基于 OAuth 2.0 标准协议实现的，通过双向安全认证、免密登陆快流。
 
 ## 整体流程
-### 三方应用对接
-#### 对接前提
-- 在对接快流引擎之前，首先你需要向快流科技申请 AppID 和 AppSecret，参考[快速开始](quickstart.md)。
-- 对接应用的用户信息已同步至快流或者在快流中注册，目前支持飞书用户信息自动同步。
+### Step1 申请AppID 和 AppSecret
+- 在对接快流引擎之前，首先你需要向快流科技申请 AppID 和 AppSecret，联系公司对接人获取。
 
-### 用户登录流程
+### Step2 绑定企业平台
+- 如果贵公司与飞书、钉钉、企业微信等有集成、且需要快流与这些平台打通、同步用户/部门等基础信息、则需要
+在对应平台申请AppId，AppSecret并发给快流技术进行配置；
+
+### Step3 开发与测试
+ 先了解如下与快流系统交互流程、整体需要贵公司前端与后端依赖快流提供的client加载快流页面、并完成SSO登陆；
+
+#### SSO登录交互流程
+- 1、用户访问快流页面时、贵公司的前端应用通过快流的前端组件(qfcore.js)集成加载快流页面 、见[前端集成](#前端集成)；
+- 2、调用qfcore.js后，qfcore.js会发起登陆快流请求、该请求接口需要贵公司的后端参考[accessToken标准接口](#accessToken标准接口)实现该标准接口、获取到正确的accessToken后、qfcore.js就会完成继续调用快流登陆接口、完成
+SSO登陆，全程用户无感知;
+##### 所以集成整体开发工作量就两点：
+- 1、贵公司的前端调用qfcore.js加载页面;
+- 2、贵公司的后端实现 [accessToken标准接口](#accessToken标准接口);
 
 ```mermaid
 sequenceDiagram
@@ -31,54 +42,7 @@ sequenceDiagram
     qflowServer ->> qflowPage: 返回登录结果，添加 qtoken 到快流对应域下
 ```
 
-
-## 后端
-样例工程代码:
-    https://github.com/QFlowTech/kuaiflow-demo
-
-后端工作量：
-    主要需要参考样例工程中的com.kuaiflow.demo.controller.KuaiFlowController#getAccessToken,
-  实现该http接口。
-
-### 获取access_token
-```java
-public class KuaiFlowBiz {
-
-	private FlowClient flowClient;
-
-	@Value("${kuai.flow.enterpriseCode}")
-	private String enterpriseCode;
-
-	@Value("${kuai.flow.appId}")
-	private String appId;
-
-	@Value("${kuai.flow.appSecret}")
-	private String appSecret;
-
-	@PostConstruct
-	public void init() {
-		// 实例化一个FlowClient、为了保护密钥安全，建议将密钥设置在环境变量中或者配置文件中。
-		// Credential cred = new Credential("enterpriseCode", "appId","appSecret");
-		Credential credential = new Credential(enterpriseCode, appId, appSecret);
-		flowClient = new FlowClient(credential);
-	}
-
-	public String getAccessToken() {
-		CustomAuthentication customAuthentication = new CustomAuthentication();
-		// 企业的用户编码-这里获取当前登陆用户的企业userCode、即贵公司的用户唯一Id
-		// customAuthentication.setCustomUserCode(UserContext.getUserCode());
-		customAuthentication.setCustomUserCode("9910031941");
-		// 贵公司使用的三方平台用户编码、如飞书Id
-		// customAuthentication.setLinkUserCode(UserContext.getLinkUserCode());
-		customAuthentication.setLinkUserCode("c94b1dcd");
-		return flowClient.getAccessToken(customAuthentication);
-	}
-
-}
-
-```
-
-## 前端
+## 前端集成
 PC浏览器端采用iframe嵌入的方式加载快流工作台界面，步骤如下：
 
 1、下载[qfcore.js](../source/qfcore.js)文件，放置于工程目录中。qfcore是快流前端基础api库，主要用于自动化登陆、获取待办等统计信息。
@@ -162,6 +126,57 @@ export default function Page() {
 ```
 iframe的src线上生产环境为https://www.kuaiflow.com/user/embed，目前内测阶段，先填写http://www.kuaiflow.com/user/embed
 
+
+## accessToken标准接口
+样例工程代码:
+https://github.com/QFlowTech/kuaiflow-demo
+
+后端工作量：
+主要需要参考样例工程中的com.kuaiflow.demo.controller.KuaiFlowController#getAccessToken,
+实现该http接口。
+
+### 获取access_token
+```java
+@Service
+public class KuaiFlowBiz {
+
+	private FlowClient flowClient;
+
+	@Value("${kuai.flow.enterpriseCode}")
+	private String enterpriseCode;
+
+	@Value("${kuai.flow.appId}")
+	private String appId;
+
+	@Value("${kuai.flow.appSecret}")
+	private String appSecret;
+
+	//环境[beta:测试/prod:线上]
+	@Value("${kuai.flow.environmentType}")
+	private String environmentType;
+
+	@PostConstruct
+	public void init() {
+		// 实例化一个FlowClient、为了保护密钥安全，建议将密钥设置在环境变量中或者配置文件中。
+		// Credential cred = new Credential("enterpriseCode", "appId","appSecret","beta");
+		Credential credential = new Credential(enterpriseCode, appId, appSecret,environmentType);
+		flowClient = new FlowClient(credential);
+	}
+
+	public String getAccessToken() {
+		CustomAuthentication customAuthentication = new CustomAuthentication();
+		// 企业的用户编码-这里获取当前登陆用户的企业userCode、即贵公司的用户唯一Id
+		// customAuthentication.setCustomUserCode(UserContext.getUserCode());
+		customAuthentication.setCustomUserCode("9910031941");
+		// 贵公司使用的三方平台用户编码、如飞书Id
+		// customAuthentication.setLinkUserCode(UserContext.getLinkUserCode());
+		customAuthentication.setLinkUserCode("c94b1dcd");
+		return flowClient.getAccessToken(customAuthentication);
+	}
+
+}
+
+```
 
 
 [上一页](quickstart.md)
