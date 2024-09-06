@@ -121,10 +121,10 @@ export default function Page() {
         }
       });
   }, []);
-  return logged && <iframe style={{ width: '100%', height: '100vh' }} src="http://www.kuaiflow.com/user/embed"></iframe>;
+  return logged && <iframe style={{ width: '100%', height: '100vh' }} src="http://beta.kuaiflow.com/user/embed"></iframe>;
 }
 ```
-iframe的src线上生产环境为https://www.kuaiflow.com/user/embed，目前内测阶段，先填写http://www.kuaiflow.com/user/embed
+iframe的src线上生产环境为https://www.kuaiflow.com/user/embed，目前内测阶段，先填写http://beta.kuaiflow.com/user/embed
 
 
 ## accessToken标准接口
