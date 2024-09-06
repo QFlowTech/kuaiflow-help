@@ -135,6 +135,15 @@ https://github.com/QFlowTech/kuaiflow-demo
 主要需要参考样例工程中的com.kuaiflow.demo.controller.KuaiFlowController#getAccessToken,
 实现该http接口。
 
+### Java-SDK
+```xml
+<dependency>
+    <groupId>com.kuaiflow</groupId>
+    <artifactId>kuaiflow-client</artifactId>
+    <version>0.0.1</version>
+</dependency>
+```
+
 ### 获取access_token
 ```java
 @Service
