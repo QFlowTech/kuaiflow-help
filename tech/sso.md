@@ -136,6 +136,7 @@ https://github.com/QFlowTech/kuaiflow-demo
 实现该http接口。
 
 ### Java-SDK
+尽量使用线上最新版本:https://repo1.maven.org/maven2/com/kuaiflow/kuaiflow-client/
 ```xml
 <dependency>
     <groupId>com.kuaiflow</groupId>
