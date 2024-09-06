@@ -3,7 +3,7 @@
 [下一页](flow.md)
 
 # 概述
-快流SSO登录是基于 OAuth 2.0 标准协议实现的，通过双向安全认证、免密登陆快流。
+快流SSO登录是基于 OAuth 2.0 标准协议实现的，通过双向安全认证、免密登录快流。
 
 ## 整体流程
 ### Step1 申请AppID 和 AppSecret
@@ -14,12 +14,12 @@
 在对应平台申请AppId，AppSecret并发给快流技术进行配置；
 
 ### Step3 开发与测试
- 先了解如下与快流系统交互流程、整体需要贵公司前端与后端依赖快流提供的client加载快流页面、并完成SSO登陆；
+ 先了解如下与快流系统交互流程、整体需要贵公司前端与后端依赖快流提供的client加载快流页面、并完成SSO登录；
 
 #### SSO登录交互流程
 - 1、用户访问快流页面时、贵公司的前端应用通过快流的前端组件(qfcore.js)集成加载快流页面 、见[前端集成](#前端集成)；
-- 2、调用qfcore.js后，qfcore.js会发起登陆快流请求、该请求接口需要贵公司的后端参考[accessToken标准接口](#accessToken标准接口)实现该标准接口、获取到正确的accessToken后、qfcore.js就会完成继续调用快流登陆接口、完成
-SSO登陆，全程用户无感知;
+- 2、调用qfcore.js后，qfcore.js会发起登录快流请求、该请求接口需要贵公司的后端参考[accessToken标准接口](#accessToken标准接口)实现该标准接口、获取到正确的accessToken后、qfcore.js就会完成继续调用快流登录接口、完成
+SSO登录，全程用户无感知;
 ##### 所以集成整体开发工作量就两点：
 - 1、贵公司的前端调用qfcore.js加载页面;
 - 2、贵公司的后端实现 [accessToken标准接口](#accessToken标准接口);
@@ -45,7 +45,7 @@ sequenceDiagram
 ## 前端集成
 PC浏览器端采用iframe嵌入的方式加载快流工作台界面，步骤如下：
 
-1、下载[qfcore.js](../source/qfcore.js)文件，放置于工程目录中。qfcore是快流前端基础api库，主要用于自动化登陆、获取待办等统计信息。
+1、下载[qfcore.js](../source/qfcore.js)文件，放置于工程目录中。qfcore是快流前端基础api库，主要用于自动化登录、获取待办等统计信息。
 
 2、代码中引用qfcore.js
 ```javascript
@@ -61,7 +61,7 @@ import qfcore from './qfcore';
 // qfcore版本号，返回版本号string
 qfcore.getVersion() 
 
-// qfcore初始化，返回promise对象，then参数为是否已登陆boolean
+// qfcore初始化，返回promise对象，then参数为是否已登录boolean
 qfcore.init({
   // 获取accessToken的Url，后端给出，参照上面后端说明
   accessTokenUrl: '',
@@ -71,10 +71,10 @@ qfcore.init({
   env: 'beta'
 })
 
-// 是否已登陆，返回登陆boolean
+// 是否已登录，返回登录boolean
 qfcore.isLogged()
 
-// 登陆，返回promise对象，then参数为是否已登陆boolean
+// 登录，返回promise对象，then参数为是否已登录boolean
 qfcore.login()
 
 // 登出，返回promise对象，then参数为是否登出成功boolean
@@ -174,7 +174,7 @@ public class KuaiFlowBiz {
 
 	public String getAccessToken() {
 		CustomAuthentication customAuthentication = new CustomAuthentication();
-		// 企业的用户编码-这里获取当前登陆用户的企业userCode、即贵公司的用户唯一Id
+		// 企业的用户编码-这里获取当前登录用户的企业userCode、即贵公司的用户唯一Id
 		// customAuthentication.setCustomUserCode(UserContext.getUserCode());
 		customAuthentication.setCustomUserCode("9910031941");
 		// 贵公司使用的三方平台用户编码、如飞书Id
