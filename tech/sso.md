@@ -99,8 +99,8 @@ qfcore.getVersion()
 
 // qfcore初始化，返回promise对象，then参数为是否已登陆boolean
 qfcore.init({
-  // 获取accessToken的Url，后端给出，参照上面后端说明
-  accessTokenUrl: '',
+  // accessToken通过后端接口获取
+  accessToken: '',
   // 终端，比如pc端(pc)、飞书小程序(lark-mini)
   client: 'pc',
   // 运行环境，可以不填，默认为prod，也可填beta，beta主要用于测试
@@ -134,28 +134,33 @@ summary: {
 ```javascript
 // react
 import React, { useState, useEffect } from 'react';
+import request from 'request';
 import qfcore from './qfcore';
 
 export default function Page() {
   const [logged, setLogged] = useState(false);
 
   useEffect(() => {
-    qfcore
-      .init({
-        accessTokenUrl: '...',
-        client: 'pc',
-        env: 'beta'
-      })
-      .then((success) => {
-        if (success) {
-          setLogged(true);
-
-          qfcore.querySummary().then((data) => {
-            // summary数据可用于入口处气泡等
-            console.log(data);
-          });
-        }
-      });
+    // ACCESS_TOKEN_URL从后端获取
+    request.post(ACCESS_TOKEN_URL).then((res) => {
+      const accessToken = res.data.data;
+      qfcore
+        .init({
+          accessToken: accessToken,
+          client: 'pc',
+          env: 'beta'
+        })
+        .then((success) => {
+          if (success) {
+            setLogged(true);
+  
+            qfcore.querySummary().then((data) => {
+              // summary数据可用于入口处气泡等
+              console.log(data);
+            });
+          }
+        });
+    });
   }, []);
   return logged && <iframe style={{ width: '100%', height: '100vh' }} src="http://www.kuaiflow.com/user/embed"></iframe>;
 }
