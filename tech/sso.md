@@ -173,14 +173,14 @@ public class KuaiFlowBiz {
 	@PostConstruct
 	public void init() {
 		// 实例化一个FlowClient、为了保护密钥安全，建议将密钥设置在环境变量中或者配置文件中。
-		// Credential cred = new Credential("enterpriseCode", "appId","appSecret","beta");
-		Credential credential = new Credential(enterpriseCode, appId, appSecret,environmentType);
+		// Credential cred = new Credential("enterpriseCode","beta", "appId","appSecret");
+		Credential credential = new Credential(enterpriseCode, environmentType, appId, appSecret);
 		flowClient = new FlowClient(credential);
 	}
 
 	public String getAccessToken() {
 		CustomAuthentication customAuthentication = new CustomAuthentication();
-		// 企业的用户编码-这里获取当前登录用户的企业userCode、即贵公司的用户唯一Id
+		// 企业的用户编码-这里获取当前登陆用户的企业userCode、即贵公司的用户唯一Id
 		// customAuthentication.setCustomUserCode(UserContext.getUserCode());
 		customAuthentication.setCustomUserCode("9910031941");
 		// 贵公司使用的三方平台用户编码、如飞书Id
@@ -189,6 +189,9 @@ public class KuaiFlowBiz {
 		return flowClient.getAccessToken(customAuthentication);
 	}
 
+	public Long startFlow() {
+		return null;
+	}
 }
 
 ```
