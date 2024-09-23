@@ -188,10 +188,6 @@ public class KuaiFlowBiz {
 		customAuthentication.setLinkUserCode("c94b1dcd");
 		return flowClient.getAccessToken(customAuthentication);
 	}
-
-	public Long startFlow() {
-		return null;
-	}
 }
 
 ```
