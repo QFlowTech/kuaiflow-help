@@ -14,7 +14,7 @@
 <dependency>
     <groupId>com.kuaiflow</groupId>
     <artifactId>kuaiflow-client</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.21</version>
 </dependency>
 ```
 
