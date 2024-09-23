@@ -1,6 +1,6 @@
 [上一页](quickstart.md)
 [回目录](../README.md)
-[下一页](flow.md)
+[下一页](dict_data.md)
 
 # 概述
 快流SSO登录是基于 OAuth 2.0 标准协议实现的，通过双向安全认证、免密登录快流。
