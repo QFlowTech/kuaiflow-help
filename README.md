@@ -5,7 +5,7 @@
 | 类型   | 流程后台                      | 用户端                                 |
 |------|---------------------------|-------------------------------------|
 | 测试环境 | https://beta.kuaiflow.com | https://beta.kuaiflow.com/user/home |
-| 线上环境  | https://www.kuaiflow.com  | https://www.kuaiflow.com                                   |
+| 线上环境  | https://www.kuaiflow.com  | https://www.kuaiflow.com/user/home  |
 
 
 ## 技术对接文档
