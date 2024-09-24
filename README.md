@@ -4,8 +4,8 @@
 
 | 类型   | 流程后台                      | 用户端                                 |
 |------|---------------------------|-------------------------------------|
-| beta | https://beta.kuaiflow.com | https://beta.kuaiflow.com/user/home |
-| 线 上  | https://www.kuaiflow.com  | https://www.kuaiflow.com                                   |
+| 测试环境 | https://beta.kuaiflow.com | https://beta.kuaiflow.com/user/home |
+| 线上环境  | https://www.kuaiflow.com  | https://www.kuaiflow.com                                   |
 
 
 ## 技术对接文档
