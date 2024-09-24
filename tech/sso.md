@@ -117,7 +117,8 @@ export default function Page() {
         .init({
           accessToken: accessToken,
           client: 'pc',
-          env: 'beta'
+          // 线上prod，开发测试用beta
+          env: 'prod'
         })
         .then((success) => {
           if (success) {
@@ -131,7 +132,8 @@ export default function Page() {
         });
     });
   }, []);
-  return logged && <iframe style={{ width: '100%', height: '100vh' }} src="http://beta.kuaiflow.com/user/embed"></iframe>;
+  // 线上src用http://www.kuaiflow.com/user/embed，beta或dev用http://gray.kuaiflow.com/user/embed
+  return logged && <iframe style={{ width: '100%', height: '100vh' }} src="http://www.kuaiflow.com/user/embed"></iframe>;
 }
 ```
 iframe的src线上生产环境为https://www.kuaiflow.com/user/embed，目前内测阶段，先填写http://beta.kuaiflow.com/user/embed
