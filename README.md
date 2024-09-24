@@ -1,5 +1,13 @@
 # help
 
+## 系统访问地址
+
+| 类型   | 流程后台                          | 用户端                                    |
+|------|-------------------------------|----------------------------------------|
+| beta | https://www.beta.kuaiflow.com | https://www.beta.kuaiflow.com/user/home |
+| 线 上  | https://www.kuaiflow.com      | https://www.kuaiflow.com                                       |
+
+
 ## 技术对接文档
 * [技术对接快速开始](tech/quickstart.md)
 * [SSO登陆](tech/sso.md)

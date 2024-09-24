@@ -9,6 +9,13 @@
 ### 1、定义字典
 - 在快流后台先定义字典基础信息、存储字段、如下面的门店信息、定义了门店编码、门店名称、门店负责人三个字段；
 
+beta:
+https://beta.kuaiflow.com/admin/dict
+
+线上:
+https://kuaiflow.com/admin/dict
+
+
   ![alt text](../image/dict/definition.png)
 
 
