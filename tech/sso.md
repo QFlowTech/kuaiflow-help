@@ -92,6 +92,11 @@ summary: {
   // 催办
   "urge": 0
 }
+
+// 监听任务数量统计，参数为function，用于回调统计数据
+qfcore.listenSummary((data) => {
+  console.log(data);
+});
 ```
 
 4、在页面中调用qfcore.init，初始化成功后展示iframe，示例：
