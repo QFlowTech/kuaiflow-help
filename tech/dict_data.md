@@ -24,9 +24,7 @@ https://kuaiflow.com/admin/dict
 
 样例工程代码:
 
-jdk1.8 https://github.com/QFlowTech/kuaiflow-demo-x
-
-jdk21 https://github.com/QFlowTech/kuaiflow-demo
+https://github.com/QFlowTech/kuaiflow-demo
 
 代码：com.kuaiflow.demo.biz.KuaiFlowBiz#saveQDictData
 

@@ -134,8 +134,7 @@ iframe的src线上生产环境为https://www.kuaiflow.com/user/embed，目前内
 
 ## accessToken标准接口
 样例工程代码:
-jdk1.8 https://github.com/QFlowTech/kuaiflow-demo-x
-jdk21 https://github.com/QFlowTech/kuaiflow-demo
+https://github.com/QFlowTech/kuaiflow-demo
 
 后端工作量：
 主要需要参考样例工程中的com.kuaiflow.demo.controller.KuaiFlowController#getAccessToken,
