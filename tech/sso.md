@@ -99,7 +99,7 @@ qfcore.listenSummary((data) => {
 });
 ```
 
-4、在页面中调用qfcore.init，初始化成功后展示iframe，示例：
+4、PC web端，在页面中调用qfcore.init，初始化成功后展示iframe，示例：
 ```javascript
 // react
 import React, { useState, useEffect } from 'react';
@@ -137,6 +137,56 @@ export default function Page() {
 }
 ```
 iframe的src线上生产环境为https://www.kuaiflow.com/user/embed，目前内测阶段，先填写http://beta.kuaiflow.com/user/embed
+
+5、小程序端，先执行1-4步骤（文件下载qfcore-miniapp），再下载qflow-mini.zip组件包，根据自己工程规范将其放置在根目录、/pages或者其他任意目录下，然后做如下配置：
+```
+//app.json文件中增加pages，下面路径中前面“pages/qflow”取决于放置qflow组件包的路径，比如放置在/pages下，则取pages/qflow，放置在根目录下，则取flow
+[
+  "pages/qflow/pages/index/index",
+  "pages/qflow/pages/detail/index",
+  "pages/qflow/pages/handle/index",
+  "pages/qflow/pages/list/index",
+  "pages/qflow/pages/new/index",
+  "pages/qflow/pages/subflow/index"
+]
+
+//qfcore部分参照4增加如下代码
++ const taroApp = require('./qflow/app.js').taroApp;
+
+request.post(ACCESS_TOKEN_URL).then((res) => {
+  const accessToken = res.data.data;
+  qfcore
+    .init({
+      accessToken: accessToken,
+      client: 'pc',
+      // 线上prod，开发测试用beta
+      env: 'prod'
+    })
+    .then((token) => {
+      if (token) {
+        setLogged(true);
+        
++       taroApp.onShow({
++         token: token,
++         pathPrefix: '/pages/qflow' // pathPrefix取决于qflow文件夹位置
++       });
+
+        qfcore.querySummary().then((data) => {
+          // summary数据可用于入口处气泡等
+          console.log(data);
+        });
+      }
+    });
+});
+
+//跳转到快流首页
++ goToIndex() {
++   wx.navigateTo({
++     url: '/pages/qflow/pages/index/index'
++   });
++ }
+
+```
 
 
 ## accessToken标准接口
