@@ -66,9 +66,7 @@ qfcore.init({
   // accessToken通过后端接口获取
   accessToken: '',
   // 终端，比如pc端(pc)、飞书小程序(lark-mini)
-  client: 'pc',
-  // 运行环境，可以不填，默认为prod，也可填beta，beta主要用于测试
-  env: 'beta'
+  client: 'pc'
 })
 
 // 是否已登录，返回登录boolean
@@ -116,9 +114,7 @@ export default function Page() {
       qfcore
         .init({
           accessToken: accessToken,
-          client: 'pc',
-          // 线上prod，开发测试用beta
-          env: 'prod'
+          client: 'pc'
         })
         .then((success) => {
           if (success) {
@@ -132,11 +128,10 @@ export default function Page() {
         });
     });
   }, []);
-  // 线上src用http://www.kuaiflow.com/user/embed，beta或dev用http://gray.kuaiflow.com/user/embed
-  return logged && <iframe style={{ width: '100%', height: '100vh' }} src="http://www.kuaiflow.com/user/embed"></iframe>;
+
+  return logged && <iframe style={{ width: '100%', height: '100vh' }} src="https://www.kuaiflow.com/user/embed"></iframe>;
 }
 ```
-iframe的src线上生产环境为https://www.kuaiflow.com/user/embed，目前内测阶段，先填写http://beta.kuaiflow.com/user/embed
 
 5、小程序端，先执行1-4步骤（文件下载qfcore-miniapp），再下载qflow-mini.zip组件包，根据自己工程规范将其放置在根目录、/pages或者其他任意目录下，然后做如下配置：
 ```
@@ -158,9 +153,7 @@ request.post(ACCESS_TOKEN_URL).then((res) => {
   qfcore
     .init({
       accessToken: accessToken,
-      client: 'pc',
-      // 线上prod，开发测试用beta
-      env: 'prod'
+      client: 'pc'
     })
     .then((token) => {
       if (token) {
