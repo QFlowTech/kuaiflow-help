@@ -142,7 +142,8 @@ export default function Page() {
   "pages/qflow/pages/handle/index",
   "pages/qflow/pages/list/index",
   "pages/qflow/pages/new/index",
-  "pages/qflow/pages/subflow/index"
+  "pages/qflow/pages/subflow/index",
+  "pages/qflow/pages/subOverdue/index"
 ]
 
 //qfcore部分参照4增加如下代码
